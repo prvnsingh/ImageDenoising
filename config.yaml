@@ -1,0 +1,9 @@
+noise_type: 'gaussian'  # this currently supports 'gaussian' and 's&p' noise modes
+patch_size: 7
+search_size: 21
+h: 0.1
+sigma: 0.1
+a: 1.5
+img_folder: "Data"
+img_name: "Image4.png"
+save_folder: "results"
