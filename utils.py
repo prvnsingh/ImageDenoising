@@ -119,17 +119,17 @@ def print_metrics(gt_image, noisy_image, guass_output, nl_output, noise_type="Ga
     print("-" * 100)
     print(" " * 30 + f"PSNR (all compared with true image) {noise_type} Noise")
     print("-" * 100)
-    print(f"Noisy image = {peak_signal_noise_ratio(gt_image, noisy_image)}")
-    print(f"Gaussian filtering = {peak_signal_noise_ratio(gt_image, guass_output)}")
-    print(f"Non-Local Means = {peak_signal_noise_ratio(gt_image, nl_output)}")
+    print(f"Noisy image = {PSNR(gt_image, noisy_image)}")
+    print(f"Gaussian filtering = {PSNR(gt_image, guass_output)}")
+    print(f"Non-Local Means = {PSNR(gt_image, nl_output)}")
 
     print("\n")
     print("-" * 100)
     print(" " * 50 + "MSE error")
     print("-" * 100)
-    print(f"MSE error for noisy image = {mean_squared_error(gt_image, noisy_image)}")
-    print(f"MSE error after gaussian filter = {mean_squared_error(gt_image, guass_output)}")
-    print(f"MSE error for predicted image = {mean_squared_error(gt_image, nl_output)}")
+    print(f"MSE error for noisy image = {MSE(gt_image, noisy_image)}")
+    print(f"MSE error after gaussian filter = {MSE(gt_image, guass_output)}")
+    print(f"MSE error for predicted image = {MSE(gt_image, nl_output)}")
 
 
 def MSE(image1, image2):
