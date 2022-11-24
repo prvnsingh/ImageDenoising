@@ -29,13 +29,64 @@ def create_gaussian(shape=(7, 7), a=1.5):
 
 
 @jit()
-def add_noise(image, mode="gaussian"):
+def add_noise_salt_and_pepper_noise(image, amount = 0.05):
     """
-    This function is used to add noise of given mode
+    This function is used to add salt and pepper noise of given image
     """
-    noisy_image = random_noise(image, mode)
-    return noisy_image
+    # Converting pixel values from 0-255 to 0-1 float
+    img = image / 255
 
+    # Getting the dimensions of the image
+    h = img.shape[0]
+    w = img.shape[1]
+
+    # Setting the ratio of salt and pepper in salt and pepper noised image
+    s = 0.5
+    p = 0.5
+
+    # Initializing the result (noisy) image
+    result = img.copy()
+
+    # Adding salt noise to the image
+    salt = np.ceil(amount * img.size * s)
+    vec = []
+    for i in img.shape:
+        vec.append(np.random.randint(0, i - 1, int(salt)))
+
+    result[vec] = 1
+
+    # Adding pepper noise to the image
+    pepper = np.ceil(amount * img.size * p)
+    vec = []
+    for i in img.shape:
+        vec.append(np.random.randint(0, i - 1, int(pepper)))
+
+    result[vec] = 0
+
+    # Converting the result back to uint8
+    result = np.uint8(result * 255)
+
+    return result
+
+
+def add_noise_gaussian(image, mean=0,var=0.01):
+    """
+    This function is used to add gaussian noise to given image
+    """
+    img = image / 255
+
+    # Initializing the result (noisy) image
+    result = img.copy()
+
+    # Adding gaussian noise to the image
+    gauss = np.random.normal(mean, var ** 0.5, img.shape)
+    result = result + gauss
+    result = np.clip(result, 0, 1)
+
+    # Converting the result back to uint8
+    result = np.uint8(result * 255)
+
+    return result
 
 def load_images(PATH):
     image = cv2.imread(PATH, cv2.IMREAD_GRAYSCALE)
